@@ -1,0 +1,9 @@
+[{
+    "EventId":"982a7195-86e2-e94d-e6c8-2ad446adce7e",
+    "EventType":"ChatMessage",
+    "Data":{
+        "sender":"Boris Guéry",
+        "message":"Welcome to Event Store",
+        "time":"21:16:03"
+    }
+}]

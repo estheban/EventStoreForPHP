@@ -1,0 +1,121 @@
+{
+  "name": "EventStore",
+  "apiVersion": "3.0.0rc2",
+  "baseUrl": "http://192.168.1.100:2113",
+  "description": "EventStore REST API",
+  "operations": {
+    "GetStream": {
+      "httpMethod": "GET",
+      "uri": "/streams/{streamName}",
+      "summary": "Retrieves a stream",
+      "parameters": {
+        "streamName": {
+          "location": "uri",
+          "description": "Stream name",
+          "required": true
+        }
+      }
+    },
+    "DeleteStream": {
+      "httpMethod": "DELETE",
+      "uri": "/streams/{streamName}",
+      "summary": "Delete a stream",
+      "parameters": {
+        "streamName": {
+          "location": "uri",
+          "description": "Stream name",
+          "required": true
+        },
+        "expectedVersion": {
+          "location": "header",
+          "required": false,
+          "sentAs": "ES-ExpectedVersion"
+        },
+        "requireMaster": {
+          "location": "header",
+          "required": false,
+          "sentAs": "ES-RequireMaster",
+          "type": "string"
+        },
+        "hardDelete": {
+          "location": "header",
+          "required": false,
+          "sentAs": "ES-HardDelete",
+          "type": "string"
+        }
+      }
+    },
+    "GetStreamMetadata": {
+      "httpMethod": "GET",
+      "uri": "/streams/{streamName}/metadata",
+      "summary": "Retrieves stream metadata",
+      "responseClass": "Bgy\\EventStore\\StreamMetadata",
+      "parameters": {
+        "streamName": {
+          "location": "uri",
+          "description": "Stream name",
+          "required": true
+        }
+      }
+    },
+    "GetStreamEvent": {
+      "httpMethod": "GET",
+      "uri": "/streams/{streamName}/{eventId}",
+      "summary": "Retrieves stream event",
+      "parameters": {
+        "streamName": {
+          "location": "uri",
+          "description": "Stream name",
+          "required": true
+        },
+        "eventId": {
+          "location": "uri",
+          "description": "Event identifier",
+          "required": true
+        }
+      }
+    },
+    "GetStreamEventMetadata": {
+      "httpMethod": "GET",
+      "uri": "/streams/{streamName}/{eventId}/metadata",
+      "summary": "Retrieves stream event metadata",
+      "responseClass": "Bgy\\EventStore\\EventMetadata",
+      "parameters": {
+        "streamName": {
+          "location": "uri",
+          "description": "Stream name",
+          "required": true
+        },
+        "eventId": {
+          "location": "uri",
+          "description": "Event identifier",
+          "required": true
+        }
+      }
+    },
+    "WriteStreamEvents": {
+      "httpMethod": "POST",
+      "uri": "/streams/{streamName}",
+      "summary": "Write events to stream",
+      "parameters": {
+        "streamName": {
+          "location": "uri",
+          "description": "Stream name",
+          "required": true
+        },
+        "expectedVersion": {
+          "location": "header",
+          "required": false,
+          "sentAs": "ES-ExpectedVersion",
+          "type": "integer"
+        },
+        "requireMaster": {
+          "location": "header",
+          "required": false,
+          "sentAs": "ES-RequireMaster",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
