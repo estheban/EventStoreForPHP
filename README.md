@@ -14,6 +14,82 @@ It is heavily inspired (and by some accounts generated from) the .NET client lib
 
 ## 2. Overview
 
+### Theory of operations
+#### Low-level operations example
+
+This is an example of a low level operations.
+
+the `makeOperation` of the `Transport` makes a transactional operation to the Event Store.
+This means you may commit several events at once transactionally.
+
+This API is not aimed to be used directly but through a Façade which would abstract
+some inner mechanism relevant to how the GetEventStore storage works.
+
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$httpClient = new \Bgy\EventStore\Transport\Http\HttpClient();
+$transport = new \Bgy\EventStore\Transport\Http\HttpTransport($httpClient);
+
+class User {
+    public $id;
+}
+
+$user = new User();
+$user->id = Uuid::generate();
+
+$transport->makeOperation(
+    new \Bgy\EventStore\Operation\AppendToStreamOperation(
+        true,
+        'users-' . (string) $user->id,
+        \Bgy\EventStore\ExpectedVersion::ANY,
+        [
+            new \Bgy\EventStore\EventData(
+                new \Bgy\EventStore\Utils\Uuid(),
+                'UserRegistered',
+                new UserRegistered($uuid ),
+                []
+            ),
+        ]
+        ,
+        null
+    )
+);
+
+$transport->makeOperation(
+    new \Bgy\EventStore\Operation\AppendToStreamOperation(
+        true,
+        'users-' . (string) $user->id,
+        \Bgy\EventStore\ExpectedVersion::ANY,
+        [
+            new \Bgy\EventStore\EventData(
+                new \Bgy\EventStore\Utils\Uuid(),
+                'UserJoinedGroup',
+                new UserJoinedGroup(new Group('admin')),
+                []
+            ),
+            new \Bgy\EventStore\EventData(
+                new \Bgy\EventStore\Utils\Uuid(),
+                'UserLeftGroup',
+                new UserLeftGroup(new Group('admin')),
+                []
+            ),
+            new \Bgy\EventStore\EventData(
+                new \Bgy\EventStore\Utils\Uuid(),
+                'UserJoinedGroup',
+                new UserJoinedGroup(new Group('admin')),
+                []
+            )
+        ]
+        ,
+        null
+    )
+);
+```
+
 ## 3. Operations
 
 ## 4. Contributing
