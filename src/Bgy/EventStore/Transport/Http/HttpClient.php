@@ -108,8 +108,6 @@ class HttpClient
         $headers = $command->getRequest()->getHeaders();
         $headers->add(new Header('Content-Type', 'application/vnd.eventstore.events+json'));
 
-        var_dump($events);
-
         $request = $this->httpClient->post(
             $command->getRequest()->getUrl(),
             $headers,
