@@ -18,7 +18,7 @@ class HttpTransport implements Transport
 {
     private $httpClient;
 
-    public function __construct(HttpClient $httpClient)
+    public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }

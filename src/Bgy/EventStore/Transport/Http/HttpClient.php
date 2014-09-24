@@ -9,9 +9,9 @@ use Guzzle\Http\Message\Header;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 
-class HttpClient
+class HttpClient implements HttpClientInterface
 {
-    private $httpClient;
+    protected $httpClient;
 
     public function __construct()
     {
